@@ -1,0 +1,36 @@
+.main {
+  min-height: calc(100vh - 100px); /* subtract header height */
+  padding: 40px 20px;
+  background: #f2f4f8; /* light, soft background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+/* Example card style for quiz items inside Main */
+.quiz-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main {
+    padding: 30px 15px;
+    gap: 20px;
+  }
+}
