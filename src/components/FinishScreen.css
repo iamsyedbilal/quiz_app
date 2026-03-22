@@ -1,0 +1,43 @@
+.finish {
+  text-align: center;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.finish-title {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.finish-score,
+.finish-highscore {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #444;
+}
+
+.btn-restart {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #4f7cff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-restart:hover {
+  background: #3a63d8;
+}
+
+.btn-restart:active {
+  transform: scale(0.96);
+}

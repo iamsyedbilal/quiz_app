@@ -1,0 +1,25 @@
+.btn-next {
+  margin-top: 20px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #4f7cff;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-next:hover {
+  background: #3a63d8;
+}
+
+.btn-next:active {
+  transform: scale(0.97);
+}
+
+.btn-next:disabled {
+  background: #bfc8e6;
+  cursor: not-allowed;
+}
