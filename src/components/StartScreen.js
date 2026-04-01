@@ -1,6 +1,8 @@
+import { useQuiz } from "../context/QuizContext";
 import "./StartScreen.css";
 
-export default function StartScreen({ numQuestions, dispatch }) {
+export default function StartScreen() {
+  const { numQuestions, dispatch } = useQuiz();
   return (
     <div className="start-container">
       <div className="start-card">

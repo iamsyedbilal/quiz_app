@@ -1,6 +1,8 @@
+import { useQuiz } from "../context/QuizContext";
 import "./FinishScreen.css";
 
-export default function FinishScreen({ points, highscore, dispatch }) {
+export default function FinishScreen() {
+  const { points, highscore, dispatch } = useQuiz();
   return (
     <div className="finish">
       <h2 className="finish-title">Quiz Finished 🎉</h2>

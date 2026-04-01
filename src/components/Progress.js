@@ -1,6 +1,8 @@
+import { useQuiz } from "../context/QuizContext";
 import "./Progress.css";
 
-export default function Progress({ index, numQuestions, points }) {
+export default function Progress() {
+  const { numQuestions, index, points } = useQuiz();
   const progress = ((index + 1) / numQuestions) * 100;
 
   return (

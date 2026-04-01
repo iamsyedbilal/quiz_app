@@ -1,4 +1,3 @@
-import { useEffect, useReducer } from "react";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Loader from "./components/Loader";
@@ -11,126 +10,28 @@ import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
 import Footer from "./components/Footer";
 import Timer from "./components/Timer";
-
-const SECS_PER_QUESTION = 30;
-
-const initialState = {
-  questions: [],
-  // loading, error, ready, active, finished
-  status: "loading",
-  index: 0,
-  answer: null,
-  points: 0,
-  highscore: 0,
-  secondsRemaining: null,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "DATA_RECEIVED":
-      return { ...state, questions: action.payload, status: "ready" };
-    case "DATA_FAILED":
-      return { ...state, status: "error" };
-    case "START":
-      return {
-        ...state,
-        status: "active",
-        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
-      };
-    case "NEW_ANSWER":
-      const question = state.questions.at(state.index);
-      return {
-        ...state,
-        answer: action.payload,
-        points:
-          action.payload === question.correctOption
-            ? state.points + question.points
-            : state.points,
-      };
-    case "NEXT_QUESTION":
-      return { ...state, index: state.index + 1, answer: null };
-    case "FINISH":
-      return {
-        ...state,
-        status: "finished",
-        highscore:
-          state.points > state.highscore ? state.points : state.highscore,
-      };
-    case "RESTART":
-      return { ...initialState, questions: state.questions, status: "ready" };
-    case "TICK":
-      return {
-        ...state,
-        secondsRemaining: state.secondsRemaining - 1,
-        status: state.secondsRemaining === 0 ? "finished" : state.status,
-      };
-
-    default:
-      throw new Error("Action unkonwn");
-  }
-}
+import { useQuiz } from "./context/QuizContext";
 
 export default function App() {
-  const [
-    { questions, status, index, answer, highscore, points, secondsRemaining },
-    dispatch,
-  ] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/questions")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        dispatch({ type: "DATA_RECEIVED", payload: data });
-      })
-      .catch((err) => {
-        console.error(err);
-        dispatch({ type: "DATA_FAILED" });
-      });
-  }, []);
-
+  const { status } = useQuiz();
   return (
     <div>
       <Header />
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
-        {status === "ready" && (
-          <StartScreen numQuestions={questions.length} dispatch={dispatch} />
-        )}
+        {status === "ready" && <StartScreen />}
         {status === "active" && (
           <>
-            <Progress
-              numQuestions={questions.length}
-              points={points}
-              // maxPossiblePoints={maxPossiblePoints}
-              answer={answer}
-              index={index}
-            />
-            <Questions
-              questions={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
-            />
+            <Progress />
+            <Questions />
             <Footer>
-              <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
-              <NextButton
-                dispatch={dispatch}
-                answer={answer}
-                numQuestions={questions.length}
-                index={index}
-              />
+              <Timer />
+              <NextButton />
             </Footer>
           </>
         )}
-        {status === "finished" && (
-          <FinishScreen
-            points={points}
-            // maxPossiblePoints={maxPossiblePoints}
-            highscore={highscore}
-            dispatch={dispatch}
-          />
-        )}
+        {status === "finished" && <FinishScreen />}
       </Main>
     </div>
   );
